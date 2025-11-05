@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Token</title>
+    <style>
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <h1>Système d'authentification JWT</h1>
+    
+    <!-- Formulaire de connexion -->
+    <div id="loginForm" class="login-form">
+        <h2>Se connecter</h2>
+        <input type="text" id="login" placeholder="Identifiant">
+        <input type="password" id="password" placeholder="Mot de passe">
+        <button id="btnLogin">Se connecter</button>
+        <div id="errorMsg" class="error"></div>
+    </div>
+
+    <!-- Zone protégée (visible uniquement si connecté) -->
+    <div id="protectedArea" class="protected-area hidden">
+        <h2>Bienvenue, <span id="username"></span> !</h2>
+        <p class="success">Vous êtes connecté avec succès.</p>
+        <p>Votre token JWT est stocké et vous permet d'accéder à cette zone protégée.</p>
+        <button id="btnLogout">Se déconnecter</button>
+    </div>
+
+    <script src="jquery-3.7.1.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
