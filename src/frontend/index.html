@@ -18,13 +18,22 @@
         <input type="password" id="password" placeholder="Mot de passe">
         <button id="btnLogin">Se connecter</button>
         <div id="errorMsg" class="error"></div>
+        <p><em>Utilisateurs de test :</em></p>
+        <ul>
+            <li>admin/admin123 (toutes permissions)</li>
+            <li>moderator/mod123 (read, write, delete)</li>
+            <li>user/user123 (read, write)</li>
+            <li>guest/guest123 (read seulement)</li>
+        </ul>
     </div>
 
     <!-- Zone protégée (visible uniquement si connecté) -->
     <div id="protectedArea" class="protected-area hidden">
         <h2>Bienvenue, <span id="username"></span> !</h2>
-        <p class="success">Vous êtes connecté avec succès.</p>
-        <p>Votre token JWT est stocké et vous permet d'accéder à cette zone protégée.</p>
+        <p><strong>Rôle :</strong> <span id="userRole"></span></p>
+        <p><strong>Permissions :</strong></p>
+        <ul id="userPermissions"></ul>
+        
         <button id="btnLogout">Se déconnecter</button>
     </div>
 

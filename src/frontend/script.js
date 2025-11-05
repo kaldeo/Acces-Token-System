@@ -20,9 +20,11 @@ $(document).ready(function() {
                 // Stocker le token dans localStorage
                 localStorage.setItem('token', response.token);
                 localStorage.setItem('username', response.login);
+                localStorage.setItem('role', response.role);
+                localStorage.setItem('permissions', JSON.stringify(response.permissions));
                 
                 // Afficher la zone protégée
-                showProtectedArea(response.login);
+                showProtectedArea(response.login, response.role, response.permissions);
                 
                 // Vider les champs
                 $('#login').val('');
@@ -41,6 +43,8 @@ $(document).ready(function() {
         // Supprimer le token du localStorage
         localStorage.removeItem('token');
         localStorage.removeItem('username');
+        localStorage.removeItem('role');
+        localStorage.removeItem('permissions');
         
         // Masquer la zone protégée et afficher le formulaire
         showLoginForm();
@@ -56,6 +60,8 @@ $(document).ready(function() {
     function checkAuth() {
         const token = localStorage.getItem('token');
         const username = localStorage.getItem('username');
+        const role = localStorage.getItem('role');
+        const permissions = JSON.parse(localStorage.getItem('permissions') || '[]');
 
         if (!token) {
             showLoginForm();
@@ -71,7 +77,7 @@ $(document).ready(function() {
             },
             success: function(response) {
                 if (response.valid) {
-                    showProtectedArea(username);
+                    showProtectedArea(username, role, permissions);
                 } else {
                     showLoginForm();
                 }
@@ -80,14 +86,24 @@ $(document).ready(function() {
                 // Token invalide ou expiré
                 localStorage.removeItem('token');
                 localStorage.removeItem('username');
+                localStorage.removeItem('role');
+                localStorage.removeItem('permissions');
                 showLoginForm();
             }
         });
     }
 
     // Afficher la zone protégée
-    function showProtectedArea(username) {
+    function showProtectedArea(username, role, permissions) {
         $('#username').text(username);
+        $('#userRole').text(role);
+        
+        // Afficher les permissions
+        $('#userPermissions').empty();
+        permissions.forEach(function(perm) {
+            $('#userPermissions').append('<li>' + perm + '</li>');
+        });
+        
         $('#loginForm').addClass('hidden');
         $('#protectedArea').removeClass('hidden');
     }
